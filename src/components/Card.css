@@ -1,0 +1,31 @@
+.card-container {
+  border: 1px solid black;
+  height: 22rem;
+  border-radius: 0.5rem;
+}
+.top {
+  width: 100%;
+  max-width: 700px;
+  background-color: blue;
+}
+.top img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.bottom {
+  padding-left: 1rem;
+  display: flex;
+  gap: 2rem;
+}
+.video-title {
+  font-weight: bold;
+}
+.video-channel {
+  color: rgb(147, 144, 139);
+}
+.info {
+  display: flex;
+  gap: 1rem;
+  color: rgb(147, 144, 139);
+}

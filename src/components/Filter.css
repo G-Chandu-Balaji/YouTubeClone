@@ -1,8 +1,19 @@
 .filter {
-  background-color: red;
+  background-color:white
   color: wheat;
   height: 2rem;
   position: sticky;
   top: 60px;
-  z-index: 100;
+  display: flex;
+  gap: 1rem;
+}
+.filter-element{
+  padding: .5rem .75rem;
+  border-radius: .5rem;
+  
+}
+
+.filter-element:hover{
+  cursor: pointer;
+  background-color: #967d7d;
 }

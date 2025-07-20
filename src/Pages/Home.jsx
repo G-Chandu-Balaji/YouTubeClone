@@ -8,8 +8,10 @@ import Hero from "../components/Hero";
 export default function Home() {
   return (
     <div className="home-layout">
-      <Sidebar />
-      <div>
+      <div className="left-section">
+        <Sidebar />
+      </div>
+      <div className="right-section">
         <Filter />
         <Hero />
       </div>

@@ -12,7 +12,7 @@ body {
 img {
   cursor: pointer;
 }
-flex-div {
+.flex-div {
   display: flex;
   align-items: center;
 }
