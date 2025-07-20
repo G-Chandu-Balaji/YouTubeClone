@@ -1,0 +1,6 @@
+.home-layout {
+  display: flex;
+  position: relative;
+  /* gap: 200px; */
+  height: 100vh;
+}
