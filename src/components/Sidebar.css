@@ -8,9 +8,33 @@
   background: #fff;
   border-right: 1px solid #ddd;
   padding: 10px 0;
-  transition: all 0.3s ease;
-
+  /* transition: all 0.3s ease; */
+}
+.scroll-bar {
   overflow-y: scroll;
+}
+
+.scroll-bar li span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+.mini-sidebar {
+  width: 80px;
+
+  /* height: 20vh; */
+}
+.mini-sidebar .explore,
+.mini-sidebar .you-section {
+  display: none;
+}
+
+.mini-sidebar li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mini-sidebar li span {
+  font-size: 0.75rem;
 }
 
 .sidebar.collapsed {
@@ -29,17 +53,17 @@
   padding: 12px 20px;
   gap: 16px;
   cursor: pointer;
-  transition: background 0.2s;
+  /* transition: background 0.2s; */
 }
 
 .sidebar li:hover {
   background-color: #f1f1f1;
 }
 
-.sidebar li span {
+/* .sidebar li span {
   font-size: 14px;
   white-space: nowrap;
-}
+} */
 
 /* hide span when collapsed */
 .sidebar.collapsed li span {

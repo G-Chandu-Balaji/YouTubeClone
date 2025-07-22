@@ -1,11 +1,11 @@
 import React from "react";
 import "./Sidebar.css";
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen }) {
   //    const sidebarClasses = `sidebar ${isOpen ? '' : 'collapsed'} ${isMobile && isOpen ? 'mobile-open' : ''}`;
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? "mini-sidebar" : "scroll-bar "}`}>
       <ul>
         <li>
           <img src="home.png" alt="home" width={20} height={20} />
@@ -19,8 +19,14 @@ export default function Sidebar() {
           <img src="subscribe.png" alt="home" width={20} height={20} />
           <span>Subscriptions</span>
         </li>
+        {isOpen && (
+          <li>
+            <img src="subscribe.png" alt="home" width={20} height={20} />
+            <span>You</span>
+          </li>
+        )}
       </ul>
-      <div>
+      <div className="you-section">
         <div>You</div>
 
         <ul>
@@ -46,7 +52,7 @@ export default function Sidebar() {
           </li>
         </ul>
       </div>
-      <div>
+      <div className="explore">
         <div>Explore</div>
 
         <ul>

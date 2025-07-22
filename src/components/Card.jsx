@@ -2,12 +2,12 @@ import React from "react";
 import "./Card.css";
 import TimeAgo from "../utils/Timefunction,js";
 
-export default function Card({ videodata }) {
+export default function Card({ videodata, smaller }) {
   const { title, thumbnailUrl, channelId, uploader, views, uploadDate } =
     videodata;
 
   return (
-    <div className="card-container">
+    <div className={`card-container ${smaller ? "smaller" : ""}`}>
       <div className="top">
         <img src={thumbnailUrl} alt="thumbnail" />
       </div>

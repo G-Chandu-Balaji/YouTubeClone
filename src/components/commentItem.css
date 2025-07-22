@@ -1,0 +1,36 @@
+.commentItem-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1rem;
+}
+.userimage-container {
+  padding-top: 0.45rem;
+  height: 30px;
+  width: 30px;
+}
+.commentItem-container img {
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+}
+.comment-right-section {
+}
+.comment-head {
+  display: flex;
+  gap: 1rem;
+}
+.comment-user {
+  font-weight: 700;
+}
+.edit-container {
+  margin-left: auto;
+}
+.edit-container .edit-options {
+  display: none;
+  display: flex;
+  gap: 0.5rem;
+}
+.edit-container .active {
+  display: block;
+}

@@ -1,19 +1,21 @@
 .filter {
-  background-color:white
+  background-color: white;
   color: wheat;
-  height: 2rem;
+  height: 2.5rem;
   position: sticky;
   top: 60px;
   display: flex;
   gap: 1rem;
+  /* padding: 0.5rem; */
 }
-.filter-element{
-  padding: .5rem .75rem;
-  border-radius: .5rem;
-  
+.filter-element {
+  padding: 0rem 0.75rem;
+  border-radius: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
-.filter-element:hover{
+.filter-element:hover {
   cursor: pointer;
   background-color: #967d7d;
 }

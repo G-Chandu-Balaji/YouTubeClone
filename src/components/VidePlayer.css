@@ -1,0 +1,79 @@
+.video-section {
+  /* flex: 6; */
+}
+
+.video-container {
+  padding-top: 1rem;
+  /* padding: 1rem; */
+  /* width: 800px; */
+  /* height: 400px; */
+}
+
+.video-container video {
+  border-radius: 1rem;
+  width: 100%;
+}
+.video-section-video-title {
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.8rem;
+}
+.uploader-image-container {
+  height: 60px;
+  width: 60px;
+}
+.uploader-image-container img {
+  border-radius: 50%;
+  width: 100%;
+}
+.middle-section {
+  display: flex;
+  justify-content: space-between;
+}
+.middle-left-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.middle-left-section button {
+  /* margin-top: 1rem;
+  margin-bottom: 1rem; */
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+}
+.middle-right-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.option-container {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #e5e5e5;
+  gap: 0.25rem;
+}
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #e5e5e5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  gap: -0.5rem;
+}
+
+.like-container .flex-div {
+  gap: 0.25rem;
+}
+.description-section {
+  padding: 1rem 0.5rem;
+  background-color: #f2f2f2;
+}
+.description-section p {
+  /* padding-bottom: 0.25rem; */
+  font-weight: bold;
+}
