@@ -84,3 +84,6 @@
   gap: 0.5rem;
   background-color: azure;
 }
+.after-sigin {
+  display: flex;
+}

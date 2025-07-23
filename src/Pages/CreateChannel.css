@@ -1,0 +1,89 @@
+.createChannel-container {
+  display: flex;
+  flex-direction: column;
+  /* gap: 5rem; */
+  align-items: center;
+  justify-content: space-between;
+  height: 90vh;
+  /* padding: 5rem; */
+  margin: 1rem 8rem;
+  border: 1px solid black;
+}
+.create-top-section {
+  align-self: flex-start;
+  /* display: flex; */
+  /* text-align: left; */
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+.create-bottom-section {
+  align-self: flex-end;
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  margin-right: 2rem;
+}
+
+.create-bottom-section button {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+}
+.create-middle-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.input-div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  border: 1px solid black;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+}
+.input-div:focus-within {
+  border-color: blue;
+}
+.input-div input {
+  min-width: 25rem;
+  border: none;
+  outline: none;
+  /* height: 2rem; */
+}
+.input-div input:active,
+.input-div input:focus {
+  border: none;
+  /* background-color: blue; */
+}
+.input-div p {
+  font-size: 0.75rem;
+}
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.create-para {
+  max-width: 30rem;
+  font-size: 0.75rem;
+}
+.upload-image-seciton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.upload-image-seciton img {
+  width: 100%;
+  height: auto;
+}
+.upload-image-seciton input {
+  margin: auto;
+}
+.upload-image-container {
+  border: 1px solid black;
+  height: 12rem;
+  width: 12rem;
+  border-radius: 50%;
+  margin: auto;
+}

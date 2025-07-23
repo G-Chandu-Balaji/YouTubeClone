@@ -17,6 +17,17 @@ export default function CommentItem({ data }) {
           <span>{data.timestamp}</span>
         </div>
         <div>{data.text}</div>
+
+        <div className="comment-like-container">
+          <div>
+            <img src="/like.png" alt="like" height={20} width={20} />
+            <p>4</p>
+          </div>
+          <div>
+            <img src="/dislike.png" alt="like" height={20} width={20} />
+            <p>1</p>
+          </div>
+        </div>
       </div>
       <div className="edit-container">
         <p>:</p>

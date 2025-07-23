@@ -3,6 +3,7 @@ import "./Header.css";
 import { Link } from "react-router";
 
 export default function Header({ setIsOpen }) {
+  const isSignin = true;
   return (
     <header className="header-container">
       <nav className="header-nav-container">
@@ -28,12 +29,26 @@ export default function Header({ setIsOpen }) {
           </div>
         </div>
         <div className="right-icons">
-          <div className="sigin">
-            <img src="/user.png" alt="user-icon" width={30} height={30} />
-            <Link to="/login">
-              <span>Sign-in</span>
-            </Link>
-          </div>
+          {isSignin ? (
+            <div className="after-sigin">
+              <div className="sigin">
+                <img src="/user.png" alt="user-icon" width={30} height={30} />
+                <Link to="/login">
+                  <span>create</span>
+                </Link>
+              </div>
+              <div className="sigin">
+                <img src="/user.png" alt="user-icon" width={30} height={30} />
+              </div>
+            </div>
+          ) : (
+            <div className="sigin">
+              <img src="/user.png" alt="user-icon" width={30} height={30} />
+              <Link to="/login">
+                <span>Sign-in</span>
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
     </header>

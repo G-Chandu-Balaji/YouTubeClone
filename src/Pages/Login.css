@@ -1,0 +1,60 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  background-color: #f9f9f9;
+  font-family: "Roboto, sans-serif";
+}
+.login-form {
+  background-color: #fff;
+  width: 30rem;
+
+  text-align: center;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+.youtube-logo {
+  color: #ff0000;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.form-input {
+  width: 100%;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.form-button {
+  background-color: #ff0000;
+  color: #fff;
+  padding: 1rem;
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.form-info {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.75rem;
+}
+.form-link {
+  color: #1a73e8;
+  cursor: pointer;
+  font-weight: bold;
+}
+.form-error {
+  color: red;
+  font-size: 1rem;
+  margin-top: 0.15rem;
+}
+.login-home {
+  text-align: center;
+}

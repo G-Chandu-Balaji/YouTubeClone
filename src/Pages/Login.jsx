@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "./Login.css";
+import { Link } from "react-router";
 
 function YouTubeLogin() {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -48,10 +50,10 @@ function YouTubeLogin() {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="login-container">
       {!loggedInUser ? (
-        <form onSubmit={handleAuth} style={styles.form}>
-          <h2 style={styles.logo}>YouTube</h2>
+        <form onSubmit={handleAuth} className="login-form">
+          <h2 className="youtube-logo">YouTube</h2>
           <h3>{isRegistering ? "Register" : "Sign In"}</h3>
 
           {isRegistering && (
@@ -60,7 +62,7 @@ function YouTubeLogin() {
               placeholder="Full Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={styles.input}
+              className="form-input"
               required
             />
           )}
@@ -70,7 +72,7 @@ function YouTubeLogin() {
             placeholder="Email or phone"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={styles.input}
+            className="form-input"
             required
           />
 
@@ -79,17 +81,17 @@ function YouTubeLogin() {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
+            className="form-input"
             required
           />
 
-          {error && <p style={styles.error}>{error}</p>}
+          {error && <p className="form-error">{error}</p>}
 
-          <button type="submit" style={styles.button}>
+          <button type="submit" className="form-button">
             {isRegistering ? "Register" : "Sign In"}
           </button>
 
-          <p style={styles.info}>
+          <p className="form-info">
             {isRegistering
               ? "Already have an account?"
               : "Don't have an account?"}{" "}
@@ -98,84 +100,23 @@ function YouTubeLogin() {
                 setIsRegistering(!isRegistering);
                 setError("");
               }}
-              style={styles.link}
+              className="form-link"
             >
               {isRegistering ? "Sign In" : "Register"}
             </span>
           </p>
         </form>
       ) : (
-        <div style={styles.home}>
+        <div className="login-home">
           <h2>Welcome, {loggedInUser.name}</h2>
           <p>You are now signed in!</p>
-          <button onClick={handleLogout} style={styles.button}>
-            Log Out
+          <button onClick={handleLogout} className="form-button">
+            <Link to="/">Go to HOME</Link>
           </button>
         </div>
       )}
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: "flex",
-    height: "100vh",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#f9f9f9",
-    fontFamily: "Roboto, sans-serif",
-  },
-  form: {
-    background: "#fff",
-    padding: "40px",
-    borderRadius: "8px",
-    boxShadow: "0 0 12px rgba(0,0,0,0.1)",
-    width: "320px",
-    textAlign: "center",
-  },
-  logo: {
-    color: "#ff0000",
-    fontWeight: "bold",
-    marginBottom: "10px",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    margin: "10px 0",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-    fontSize: "14px",
-  },
-  button: {
-    backgroundColor: "#ff0000",
-    color: "#fff",
-    padding: "10px",
-    width: "100%",
-    border: "none",
-    borderRadius: "4px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    marginTop: "10px",
-  },
-  info: {
-    fontSize: "13px",
-    color: "#555",
-    marginTop: "15px",
-  },
-  link: {
-    color: "#1a73e8",
-    cursor: "pointer",
-    fontWeight: "bold",
-  },
-  error: {
-    color: "red",
-    fontSize: "13px",
-    marginTop: "5px",
-  },
-  home: {
-    textAlign: "center",
-  },
-};
 
 export default YouTubeLogin;

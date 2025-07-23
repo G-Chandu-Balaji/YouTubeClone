@@ -9,7 +9,7 @@
   height: 30px;
   width: 30px;
 }
-.commentItem-container img {
+.commentItem-container .userimage-container img {
   border-radius: 50%;
   width: 100%;
   height: auto;
@@ -33,4 +33,14 @@
 }
 .edit-container .active {
   display: block;
+}
+.comment-like-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.comment-like-container div {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }

@@ -63,3 +63,17 @@
   width: 100%;
   height: 100%;
 }
+
+.medium {
+  /* height: 15rem; */
+  padding: 0rem 0rem;
+  height: auto;
+  border: none;
+  /* width: 17rem; */
+}
+.medium .bottom {
+  padding-left: 0rem;
+}
+.medium .top {
+  border-radius: 0.5rem;
+}
