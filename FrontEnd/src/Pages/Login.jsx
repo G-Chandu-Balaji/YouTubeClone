@@ -15,7 +15,7 @@ function YouTubeLogin() {
     return /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/.test(pwd);
   };
 
-  const handleAuth = (e) => {
+  async function handleAuth(e) {
     e.preventDefault();
     setError("");
 
@@ -33,13 +33,30 @@ function YouTubeLogin() {
         "Password must be at least 8 characters, include a number and a special character."
       );
     }
+    try {
+      const data = await fetch("http://localhost:5000/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+      const fulldata = await data.json();
+      console.log(fulldata);
+    } catch (err) {
+      console.log("Error", err.message);
+    }
 
     // Dummy login success
     setLoggedInUser({
       name: isRegistering ? name : email.split("@")[0],
       email,
     });
-  };
+  }
 
   const handleLogout = () => {
     setEmail("");
