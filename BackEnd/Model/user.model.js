@@ -1,18 +1,16 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
-//  { userId: "user01", username: "JohnDoe", email: "john@example.com", password:
-//  "hashedPassword123", avatar: "https://example.com/avatar/johndoe.png", channels:
-//  ["channel01"],
 
-const userSchema = new Schema({
-  // userId: String,
-
-  username: String,
-  email: String,
-  password: String,
-  // avatar: String,
-  // channels: [String],
-});
+const userSchema = new Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }, // Store hashed password
+    profileImage: { type: String }, // URL to avatar
+    channelIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Channel" }],
+  },
+  { timestamps: true }
+);
 
 let userModel = mongoose.model("User", userSchema);
 export default userModel;

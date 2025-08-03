@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "./Header";
+import "./layout.css";
 
 import { Outlet, useLocation } from "react-router";
 
@@ -8,7 +9,7 @@ function Layout() {
   // console.log("pathname", location.pathname);
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div>
+    <div className="app-layout">
       {location.pathname === "/login" ? "" : <Header setIsOpen={setIsOpen} />}
       <Outlet context={isOpen} />
     </div>

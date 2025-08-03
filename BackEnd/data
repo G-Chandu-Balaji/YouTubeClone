@@ -1,0 +1,68 @@
+[
+  {
+    username: "rajveer_99",
+    password: "Raj@1234",
+    email: "rajveer99@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/75.jpg",
+  },
+  {
+    username: "ananya.sharma",
+    password: "Ananya@456",
+    email: "ananya.sharma21@yahoo.com",
+    profileImage: "https://randomuser.me/api/portraits/women/65.jpg",
+  },
+  {
+    username: "vinay_kumar",
+    password: "Vinay!789",
+    email: "vinaykumar88@outlook.com",
+    profileImage: "https://randomuser.me/api/portraits/men/81.jpg",
+  },
+  {
+    username: "megha_rao",
+    password: "Megha#321",
+    email: "megharao12@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/34.jpg",
+  },
+  {
+    username: "aarav_singh",
+    password: "Aarav@000",
+    email: "aarav.singh23@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/42.jpg",
+  },
+  {
+    username: "isha.patil",
+    password: "Isha@1111",
+    email: "isha_patil19@yahoo.in",
+    profileImage: "https://randomuser.me/api/portraits/women/57.jpg",
+  },
+  {
+    username: "manavverma",
+    password: "Manav@999",
+    email: "manav.verma10@hotmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/18.jpg",
+  },
+  {
+    username: "kavita.mehra",
+    password: "Kavita@234",
+    email: "kavita.mehra99@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/83.jpg",
+  },
+  {
+    username: "yash_thakur",
+    password: "Yash#2020",
+    email: "yash.thakur45@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/63.jpg",
+  },
+  {
+    username: "riya.kapoor",
+    password: "Riya$123",
+    email: "riya.kapoor88@yahoo.com",
+    profileImage: "https://randomuser.me/api/portraits/women/26.jpg",
+  },
+  {
+    username: "Balaji",
+    password: "balaji1234",
+    email: "balaji@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/43.jpg",
+  },
+];

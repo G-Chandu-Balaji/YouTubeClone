@@ -1,11 +1,11 @@
 import React from "react";
 import "./Card.css";
 import TimeAgo from "../utils/Timefunction,js";
+import FormatNumbers from "../utils/formatnumbers";
 
 export default function Card({ videodata, smaller, medium }) {
-  const { title, thumbnailUrl, channelId, uploader, views, uploadDate } =
-    videodata;
-
+  const { title, thumbnailUrl, channelId, views, createdAt } = videodata;
+  const { channelImage, name } = channelId;
   return (
     <div
       className={`card-container ${smaller ? "smaller" : ""} ${
@@ -16,13 +16,17 @@ export default function Card({ videodata, smaller, medium }) {
         <img src={thumbnailUrl} alt="thumbnail" />
       </div>
       <div className="bottom">
-        {!medium && <div className="channel-img">{uploader}</div>}
+        {!medium && (
+          <div className="channel-img">
+            <img src={channelImage} alt="" height={40} width={40} />
+          </div>
+        )}
         <div className="video-info">
           <div className="video-title">{title}</div>
-          {!medium && <div className="video-channel">{channelId}</div>}
+          {!medium && <div className="video-channel">{name}</div>}
           <div className="info">
-            <div>{views} views</div>
-            <div>{TimeAgo(uploadDate)}</div>
+            <div>{FormatNumbers(views)} views</div>
+            <div>{TimeAgo(createdAt)}</div>
           </div>
         </div>
       </div>

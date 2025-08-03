@@ -1,21 +1,36 @@
 .filter {
   background-color: white;
   color: wheat;
-  height: 2.5rem;
+  height: 3rem;
   position: sticky;
   top: 60px;
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   /* padding: 0.5rem; */
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  justify-content: flex-start;
+}
+.filter button {
+  border: none;
 }
 .filter-element {
-  padding: 0rem 0.75rem;
+  padding: 0rem 0.8rem;
   border-radius: 0.5rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  /* font-size: 0.95rem; */
 }
 
 .filter-element:hover {
   cursor: pointer;
-  background-color: #967d7d;
+  /* background-color: #967d7d; */
+  background-color: black;
+  color: white;
+}
+
+.active {
 }

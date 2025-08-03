@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Hero.css";
 import Card from "./Card";
 import { Link } from "react-router";
-const data = [
+const data1 = [
   {
     videoId: "video01",
     title: "Learn React in 30 Minutes",
@@ -88,16 +88,33 @@ const data = [
 ];
 
 export default function Hero() {
+  let [videos, setVideos] = useState([]);
+  useEffect(() => {
+    async function getdata() {
+      try {
+        let res = await fetch("http://localhost:5000/api/video");
+        let data = await res.json();
+        setVideos(data);
+        console.log(data);
+      } catch (err) {
+        console.log("error", err.message);
+      }
+    }
+    getdata();
+  }, []);
   return (
     <div className="hero-container">
-      {data.map((ele) => (
-        <Link
-          to={`/watch/:${ele.videoId}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <Card videodata={ele} />
-        </Link>
-      ))}
+      {videos.map((ele) => {
+        return (
+          <Link
+            to={`/watch/${ele._id}`}
+            key={ele._id}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Card videodata={ele} />
+          </Link>
+        );
+      })}
     </div>
-  )
+  );
 }

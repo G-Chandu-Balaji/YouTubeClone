@@ -5,18 +5,19 @@ import Layout from "./components/layout";
 import PageNotFound from "./Pages/PageNotFound";
 import Channel from "./Pages/Channel";
 import Login from "./Pages/Login";
-import VideoPlay from "./Pages/video";
+// import VideoPlay from "./Pages/video";
 import CreateChannel from "./Pages/CreateChannel";
+import Video from "./Pages/video";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/watch/:id" element={<VideoPlay />} />
+        <Route path="/watch/:id" element={<Video />} />
         <Route path="login" element={<Login />} />
         <Route path="createChannel" element={<CreateChannel />} />
-        <Route path="channel" element={<Channel />} />
+        <Route path="channel/:channelId" element={<Channel />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

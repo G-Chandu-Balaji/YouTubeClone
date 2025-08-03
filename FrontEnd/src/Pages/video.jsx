@@ -1,8 +1,8 @@
-import React from "react";
-import VIdeoPlayer from "../components/VIdeoPlayer";
+import React, { useEffect, useState } from "react";
+import VideoPlayer from "../components/VIdeoPlayer";
 import "./video.css";
 import Card from "../components/Card";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 const data = [
   {
     videoId: "video01",
@@ -193,17 +193,119 @@ const data = [
   },
 ];
 
-export default function video() {
+// export default function Video() {
+//   const { id } = useParams(); // 👈 Make sure route is /video/:id
+//   const [videoData, setVideoData] = useState(null);
+//   let [sidevideos, setSideVideos] = useState([]);
+
+//   useEffect(() => {
+//     async function fetchData() {
+//       try {
+//         const res = await fetch(`http://localhost:5000/api/video/${id}`);
+//         const data = await res.json();
+//         if (!data) {
+//           throw new Error("Video data not found");
+//         }
+//         setVideoData(data);
+//         console.log("Fetched data:", data);
+//       } catch (err) {
+//         console.error("Error fetching video:", err.message);
+//       }
+//     }
+
+//     if (id) {
+//       fetchData();
+//     }
+//   }, [id]);
+
+//   if (!videoData) {
+//     return <div>Loading...</div>;
+//   }
+
+//   useEffect(() => {
+//     async function getSideVideosData() {
+//       try {
+//         let res = await fetch("http://localhost:5000/api/video");
+//         let data = await res.json();
+//         setSideVideos(data);
+//         console.log(data);
+//       } catch (err) {
+//         console.log("error", err.message);
+//       }
+//     }
+//     getSideVideosData();
+//   }, []);
+//   return (
+//     <div className="videoPage">
+//       <div className="videoPage-left-section">
+//         <VIdeoPlayer videodata={videoData} />
+//       </div>
+
+//       <div className="video-list">
+//         {sidevideos.map((ele) => (
+//           <Link
+//             to={`/watch/:${ele._id}`}
+//             style={{ textDecoration: "none", color: "inherit" }}
+//           >
+//             <Card videodata={ele} smaller={true} />
+//           </Link>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+export default function Video() {
+  const { id } = useParams();
+  const [videoData, setVideoData] = useState(null);
+  const [sidevideos, setSideVideos] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(`http://localhost:5000/api/video/${id}`);
+        const data = await res.json();
+        if (!data) throw new Error("Video data not found");
+        setVideoData(data);
+      } catch (err) {
+        console.error("Error fetching video:", err.message);
+      }
+    }
+
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
+  useEffect(() => {
+    async function getSideVideos() {
+      try {
+        const res = await fetch("http://localhost:5000/api/video");
+        const data = await res.json();
+        setSideVideos(data);
+      } catch (err) {
+        console.log("Error fetching side videos:", err.message);
+      }
+    }
+
+    getSideVideos();
+  }, []);
+
+  if (!videoData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="videoPage">
       <div className="videoPage-left-section">
-        <VIdeoPlayer />
+        <VideoPlayer videodata={videoData} />
       </div>
 
       <div className="video-list">
-        {data.map((ele) => (
+        {sidevideos.map((ele) => (
           <Link
-            to={`/watch/:${ele.videoId}`}
+            to={`/watch/${ele._id}`}
+            key={ele._id}
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <Card videodata={ele} smaller={true} />

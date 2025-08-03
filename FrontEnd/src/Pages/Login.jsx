@@ -9,6 +9,48 @@ function YouTubeLogin() {
   const [password, setPassword] = useState("");
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [error, setError] = useState("");
+  // const [token, setToken] = useState("");
+
+  async function getusers() {
+    const token = localStorage.getItem("token");
+    try {
+      const data = await fetch("http://localhost:5000/api/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const fulldata = await data.json();
+
+      console.log(fulldata);
+      localStorage.setItem("token", fulldata.token);
+    } catch (err) {
+      console.log("Error", err.message);
+    }
+  }
+  async function handlelogin() {
+    try {
+      const data = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      const fulldata = await data.json();
+
+      console.log(fulldata);
+      localStorage.setItem("token", fulldata.token);
+      const token1 = localStorage.getItem("token");
+      console.log(token1);
+    } catch (err) {
+      console.log("Error", err.message);
+    }
+  }
 
   // Strong password: 8+ chars, at least 1 number and 1 special character
   const isStrongPassword = (pwd) => {
@@ -28,34 +70,39 @@ function YouTubeLogin() {
       return setError("Please enter a valid email address.");
     }
 
-    if (!isStrongPassword(password)) {
-      return setError(
-        "Password must be at least 8 characters, include a number and a special character."
-      );
-    }
-    try {
-      const data = await fetch("http://localhost:5000/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      });
-      const fulldata = await data.json();
-      console.log(fulldata);
-    } catch (err) {
-      console.log("Error", err.message);
+    // if (!isStrongPassword(password)) {
+    //   return setError(
+    //     "Password must be at least 8 characters, include a number and a special character."
+    //   );
+    // }
+
+    if (isRegistering) {
+      try {
+        const data = await fetch("http://localhost:5000/api/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+          }),
+        });
+        const fulldata = await data.json();
+        console.log(fulldata);
+      } catch (err) {
+        console.log("Error", err.message);
+      }
+    } else {
+      await handlelogin();
     }
 
     // Dummy login success
-    setLoggedInUser({
-      name: isRegistering ? name : email.split("@")[0],
-      email,
-    });
+    // setLoggedInUser({
+    //   name: isRegistering ? name : email.split("@")[0],
+    //   email,
+    // });
   }
 
   const handleLogout = () => {
@@ -132,6 +179,7 @@ function YouTubeLogin() {
           </button>
         </div>
       )}
+      <button onClick={getusers}>fetch users</button>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useOutletContext } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Link, useOutletContext, useParams } from "react-router";
 import Sidebar from "../components/Sidebar";
 import "./Channel.css";
 import Card from "../components/Card";
@@ -69,7 +69,33 @@ const data = [
 ];
 
 export default function Channel() {
+  const { channelId } = useParams();
+  const [channeldata, setChanneldata] = useState(null);
   const isOpen = useOutletContext();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function getSideVideos() {
+      try {
+        const res = await fetch(
+          `http://localhost:5000/api/channel/${channelId}`
+        );
+        const data = await res.json();
+        setChanneldata(data);
+      } catch (err) {
+        console.log("Error fetching side videos:", err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getSideVideos();
+  }, [channelId]);
+
+  if (loading) return <div>Loading...</div>;
+  console.log("channeldata", channeldata);
+  const { channel, videos } = channeldata;
+  console.log(channel);
 
   return (
     <div className="channel-layout">
@@ -77,30 +103,23 @@ export default function Channel() {
         <Sidebar isOpen={isOpen} />
       </div>
       <div className="channel-section">
-        <div className="channel-banner">banner</div>
+        <div className="channel-banner">
+          <img src={channel.bannerImage} alt="" />
+        </div>
         <div className="channel-info">
           <div className="channel-user">
-            <img
-              src="https://yt3.ggpht.com/pZQ5JMD4EOI8TcNYAPTzMexe_fC0CKnb_hYlV4rPfIzmDidF239fH1XKmzkeT30XSg7fxNwc_w=s88-c-k-c0x00ffffff-no-rj"
-              alt=""
-              height={150}
-              width={150}
-            />
+            <img src={channel.channelImage} alt="" height={150} width={150} />
           </div>
           <div className="channel-info-right-section">
-            <h2>Title</h2>
+            <h2>{channel.name}</h2>
             <div className="channel-info-details">
               <span>
-                <strong>dfhejsdfs</strong>
+                <strong>@{channel.name}</strong>
               </span>
-              <span>1.67M sunscribers</span>
-              <span>331 videos</span>
+              <span>{channel.subscribers} sunscribers</span>
+              <span>{videos.length} videos</span>
             </div>
-            <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Non sed
-              sequi, itaque doloribus dolor culpa, reprehenderit expedita
-              ducimus facere amet
-            </div>
+            <div>{channel.description}</div>
             <div className="channel-info-buttons">
               <button>Subscribe</button>
               <button>Join</button>
@@ -118,7 +137,7 @@ export default function Channel() {
           <hr />
         </div>
         <div className="channel-videos">
-          {data.map((ele) => (
+          {videos.map((ele) => (
             <Link
               to={`/watch/:${ele.videoId}`}
               style={{ textDecoration: "none", color: "inherit" }}

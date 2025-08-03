@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./VidePlayer.css";
 import CommentItem from "./commentItem";
+import { BiFullscreen } from "react-icons/bi";
+import ReactPlayer from "react-player";
+import { Link } from "react-router";
+import { formatDistanceToNow } from "date-fns";
+import FormatNumbers from "../utils/formatnumbers";
 
+// import ReactPlayer from "react-player/youtube";
 const mockData = {
   videoId: "dQw4w9WgXcQ",
   title: "Learn React in 30 Minutes",
@@ -40,31 +46,56 @@ const mockData = {
   ],
 };
 
-export default function VIdeoPlayer() {
+export default function VIdeoPlayer({ videodata }) {
+  const [expanded, setExpanded] = useState(false);
+  const {
+    // views,
+    // title,
+    // likes,
+    // description,
+    comments,
+    // uploader,
+    // uploadDate,
+    // imageUser,
+  } = mockData;
+  console.log(videodata);
   const {
     title,
-    views,
+    videoUrl,
+    channelId,
     likes,
+    dislikes,
+    views,
+    createdAt,
     description,
-    comments,
-    uploader,
-    uploadDate,
-    imageUser,
-  } = mockData;
+  } = videodata;
+  let Id = videoUrl.split("/embed/")[1];
+  console.log(title, videoUrl, Id);
+  const timeAgo = formatDistanceToNow(new Date(createdAt), {
+    addSuffix: true,
+  });
+
   return (
-    <div class2Name="video-section">
+    <div className="video-section">
       <div className="video-container">
-        <video src="/testvideo.mp4" autoPlay></video>
+        <ReactPlayer
+          src={`https://www.youtube.com/watch?v=${Id}`}
+          controls
+          width="100%"
+          height="100%"
+        />
       </div>
       <h3 className="video-section-video-title">{title}</h3>
       <div className="middle-section">
         <div className="middle-left-section">
           <div className="uploader-image-container">
-            <img src={imageUser} alt="" />
+            <img src={channelId.channelImage} alt="" />
           </div>
           <div className="">
-            <div>{uploader}</div>
-            <div>50M</div>
+            <div>
+              <Link to={`/channel/${channelId._id}`}>{channelId.name}</Link>
+            </div>
+            <div>{FormatNumbers(channelId.subscribers)} subscribers</div>
           </div>
           <button>Subscribe</button>
         </div>
@@ -73,11 +104,11 @@ export default function VIdeoPlayer() {
           <div className="like-container">
             <div className="flex-div">
               <img src="/like.png" alt="like" height={20} width={20} />
-              <p>{likes}</p>
+              <p>{FormatNumbers(likes)}</p>
             </div>
             <div className="flex-div">
               <img src="/dislike.png" alt="like" height={20} width={20} />
-              <p>1</p>
+              <p>{dislikes}</p>
             </div>
           </div>
           <div className="option-container">
@@ -93,11 +124,15 @@ export default function VIdeoPlayer() {
       <div className="description-section">
         {/* <div className=""> */}
         <p>
-          {views} Views {uploadDate}{" "}
+          {views.toLocaleString()} Views {timeAgo}{" "}
         </p>
 
-        {/* </div> */}
-        <div>{description}</div>
+        <div className={`video-description ${expanded ? "expanded" : ""}`}>
+          {description}
+        </div>
+        <button className="text-button" onClick={() => setExpanded(!expanded)}>
+          {expanded ? "Show less" : "Show more"}
+        </button>
       </div>
       <hr />
       <div>

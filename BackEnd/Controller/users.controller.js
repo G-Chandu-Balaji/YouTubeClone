@@ -14,14 +14,16 @@ export default async function Users(req, res) {
 
 export async function createUsers(req, res) {
   try {
-    let { name, email, password } = req.body;
+    // let { name, email, password } = req.body;
+    let { username, email, password } = req.body;
+
     if (await userModel.findOne({ email })) {
       res.json("User Email already exists");
     }
     // console.log(newUserdata);
     let hashpassword = await bcrypt.hash(password, 10);
     let newUser = await userModel.create({
-      username: name,
+      username,
       email,
       password: hashpassword,
     });
@@ -37,7 +39,7 @@ export async function deleteUser(req, res) {
   try {
     let { id } = req.params;
     // console.log(newUserdata);
-    let newUser = await userModel.findOneAndDelete({ userId: id });
+    let newUser = await userModel.deleteMany({});
     return res.status(200).send(newUser);
   } catch (err) {
     res.status(404).send(err);
@@ -57,7 +59,7 @@ export async function LoginUser(req, res) {
         res.json({ message: "incorrect password" });
       } else {
         var token = JWT.sign({ email, password }, "hello", {
-          expiresIn: "10s",
+          expiresIn: "10d",
         });
 
         res.json({ message: "Password matched", token });
@@ -67,3 +69,25 @@ export async function LoginUser(req, res) {
     res.status(404).send(err.message);
   }
 }
+
+export const insertManyUsers = async (req, res) => {
+  try {
+    const users = req.body;
+
+    if (!Array.isArray(users) || users.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Request body must be a non-empty array" });
+    }
+
+    const insertedUsers = await userModel.insertMany(users);
+    res.status(201).json({
+      message: "Users inserted successfully",
+      data: insertedUsers,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to insert users", error: error.message });
+  }
+};

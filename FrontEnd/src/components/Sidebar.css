@@ -58,6 +58,7 @@
 
 .sidebar li:hover {
   background-color: #f1f1f1;
+  border-radius: 0.75rem;
 }
 
 /* .sidebar li span {
@@ -103,4 +104,14 @@
     top: 10px;
     left: 10px;
   }
+}
+
+.category-heading {
+  margin-top: 0.5rem;
+  padding: 12px 20px;
+  font-weight: bold;
+}
+.category-heading:hover {
+  background-color: #f1f1f1;
+  border-radius: 0.75rem;
 }
