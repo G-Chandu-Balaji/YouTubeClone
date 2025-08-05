@@ -3,7 +3,7 @@ import "./Filter.css";
 
 const filteroptions = [
   "All",
-  "gamingplay",
+  "gameplay",
   "music",
   "news",
   "Anime",
@@ -12,11 +12,20 @@ const filteroptions = [
   "Current AFfairs",
   "Backend",
 ];
-export default function Filter() {
+export default function Filter({ SetFiltername, filtername }) {
+  function handleSearch(ele) {
+    SetFiltername(ele);
+  }
   return (
     <div className="filter">
       {filteroptions.map((ele) => (
-        <button className="filter-element">{ele}</button>
+        <button
+          key={ele}
+          onClick={() => handleSearch(ele)}
+          className={`filter-element ${filtername === ele ? "active" : ""}`}
+        >
+          {ele}
+        </button>
       ))}
     </div>
   );

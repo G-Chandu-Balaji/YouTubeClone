@@ -2,119 +2,49 @@ import React, { useEffect, useState } from "react";
 import "./Hero.css";
 import Card from "./Card";
 import { Link } from "react-router";
-const data1 = [
-  {
-    videoId: "video01",
-    title: "Learn React in 30 Minutes",
-    thumbnailUrl:
-      "https://marketplace.canva.com/EAEqfS4X0Xw/1/0/1600w/canva-most-attractive-youtube-thumbnail-wK95f3XNRaM.jpg",
-    channelId: "channel01",
-    uploader: "user01",
-    views: 15200,
-    likes: 1023,
-    dislikes: 45,
-    uploadDate: "2024-09-20",
-    comments: [
-      {
-        commentId: "comment01",
-        userId: "user02",
-        text: "Great video! Very helpful.",
-        timestamp: "2024-09-21T08:30:00Z",
-      },
-    ],
-  },
-  {
-    videoId: "video02",
-    title: "Learn React in 30 Minutes",
-    thumbnailUrl:
-      "https://i.pinimg.com/736x/5a/2e/37/5a2e373fb15805b2869e86a7dec7a1a4.jpg",
-    description: "A quick tutorial to get started with React.",
-    channelId: "channel01",
-    uploader: "user01",
-    views: 15200,
-    likes: 1023,
-    dislikes: 45,
-    uploadDate: "2024-09-20",
-    comments: [
-      {
-        commentId: "comment01",
-        userId: "user02",
-        text: "Great video! Very helpful.",
-        timestamp: "2024-09-21T08:30:00Z",
-      },
-    ],
-  },
-  {
-    videoId: "video03",
-    title: "Learn React in 30 Minutes",
-    thumbnailUrl:
-      "https://marketplace.canva.com/EAEqfS4X0Xw/1/0/1600w/canva-most-attractive-youtube-thumbnail-wK95f3XNRaM.jpg",
-    channelId: "channel01",
-    uploader: "user01",
-    views: 15200,
-    likes: 1023,
-    dislikes: 45,
-    uploadDate: "2024-09-20",
-    comments: [
-      {
-        commentId: "comment01",
-        userId: "user02",
-        text: "Great video! Very helpful.",
-        timestamp: "2024-09-21T08:30:00Z",
-      },
-    ],
-  },
-  {
-    videoId: "video04",
-    title: "Learn React in 30 Minutes",
-    thumbnailUrl:
-      "https://i.pinimg.com/736x/5a/2e/37/5a2e373fb15805b2869e86a7dec7a1a4.jpg",
-    description: "A quick tutorial to get started with React.",
-    channelId: "channel01",
-    uploader: "user01",
-    views: 15200,
-    likes: 1023,
-    dislikes: 45,
-    uploadDate: "2024-09-20",
-    comments: [
-      {
-        commentId: "comment01",
-        userId: "user02",
-        text: "Great video! Very helpful.",
-        timestamp: "2024-09-21T08:30:00Z",
-      },
-    ],
-  },
-];
 
-export default function Hero() {
-  let [videos, setVideos] = useState([]);
+export default function Hero({ filtername }) {
+  const [videos, setVideos] = useState([]);
+  const [filteredVideos, setFilteredVideos] = useState([]);
+
   useEffect(() => {
-    async function getdata() {
+    async function getData() {
       try {
         let res = await fetch("http://localhost:5000/api/video");
         let data = await res.json();
         setVideos(data);
-        console.log(data);
+        setFilteredVideos(data); // initially show all videos
       } catch (err) {
         console.log("error", err.message);
       }
     }
-    getdata();
+    getData();
   }, []);
+
+  useEffect(() => {
+    if (filtername === "" || filtername === "All") {
+      setFilteredVideos(videos);
+      console.log(videos);
+    } else {
+      const lowerFilter = filtername.toLowerCase();
+      const newVideos = videos.filter((ele) => {
+        const titleMatch = ele.title?.toLowerCase().includes(lowerFilter);
+        const tagMatch = ele.tags?.some(
+          (tag) => tag.toLowerCase() === lowerFilter
+        );
+        return titleMatch || tagMatch;
+      });
+
+      setFilteredVideos(newVideos);
+      console.log("newvideos", newVideos);
+    }
+  }, [filtername, videos]);
+
   return (
     <div className="hero-container">
-      {videos.map((ele) => {
-        return (
-          <Link
-            to={`/watch/${ele._id}`}
-            key={ele._id}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <Card videodata={ele} />
-          </Link>
-        );
-      })}
+      {filteredVideos.map((ele) => (
+        <Card key={ele._id} videodata={ele} />
+      ))}
     </div>
   );
 }

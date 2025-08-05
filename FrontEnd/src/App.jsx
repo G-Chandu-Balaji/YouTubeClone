@@ -8,6 +8,7 @@ import Login from "./Pages/Login";
 // import VideoPlay from "./Pages/video";
 import CreateChannel from "./Pages/CreateChannel";
 import Video from "./Pages/video";
+import SearchResult from "./Pages/SearchResult";
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/watch/:id" element={<Video />} />
         <Route path="login" element={<Login />} />
-        <Route path="createChannel" element={<CreateChannel />} />
+        <Route path="/user/channel/create" element={<CreateChannel />} />
         <Route path="channel/:channelId" element={<Channel />} />
+        <Route path="/search" element={<Home />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

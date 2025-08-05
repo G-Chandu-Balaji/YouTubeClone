@@ -4,11 +4,13 @@ import CommentModel from "../Model/comments.model.js";
 export async function fetchComments(req, res) {
   try {
     const { videoId } = req.params;
-    const comments = await CommentModel.find({ videoId })
-      .populate("userId", "name")
-      .sort({ createdAt: -1 });
+    const comments = await CommentModel.find({ videoId }).populate(
+      "userId",
+      "username profileImage"
+    );
+    // .sort({ createdAt: -1 });
 
-    res.json(comments);
+    res.json({ comments });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch comments" });
   }

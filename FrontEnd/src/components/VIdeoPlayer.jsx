@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./VidePlayer.css";
 import CommentItem from "./commentItem";
 import { BiFullscreen } from "react-icons/bi";
@@ -48,12 +48,13 @@ const mockData = {
 
 export default function VIdeoPlayer({ videodata }) {
   const [expanded, setExpanded] = useState(false);
+  const [comments, setComments] = useState([]);
   const {
     // views,
     // title,
     // likes,
     // description,
-    comments,
+    // comments,
     // uploader,
     // uploadDate,
     // imageUser,
@@ -68,12 +69,24 @@ export default function VIdeoPlayer({ videodata }) {
     views,
     createdAt,
     description,
+    _id,
   } = videodata;
   let Id = videoUrl.split("/embed/")[1];
   console.log(title, videoUrl, Id);
   const timeAgo = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,
   });
+
+  useEffect(() => {
+    async function getcomments() {
+      let res = await fetch(`http://localhost:5000/api/comments/${_id}`);
+      let data = await res.json();
+      console.log("comments", data.comments);
+      setComments(data.comments);
+      console.log("inside state comments", comments);
+    }
+    getcomments();
+  }, [_id]);
 
   return (
     <div className="video-section">
@@ -139,7 +152,7 @@ export default function VIdeoPlayer({ videodata }) {
         <h3>{comments.length} Comments</h3>
         <div>
           {comments.map((ele) => (
-            <CommentItem data={ele} key={ele.commentId} />
+            <CommentItem data={ele} key={ele._id} />
           ))}
         </div>
       </div>

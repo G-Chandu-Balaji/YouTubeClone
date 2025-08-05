@@ -1,15 +1,16 @@
 .filter {
   background-color: white;
   color: wheat;
-  height: 3rem;
-  position: sticky;
-  top: 60px;
+  height: 4rem;
+  position: fixed;
+  top: 3.25rem;
   display: flex;
   gap: 1.5rem;
   /* padding: 0.5rem; */
   margin-left: 2rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  width: 100%;
 
   justify-content: flex-start;
 }
@@ -19,8 +20,8 @@
 .filter-element {
   padding: 0rem 0.8rem;
   border-radius: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-weight: 600;
   /* font-size: 0.95rem; */
 }
@@ -32,5 +33,8 @@
   color: white;
 }
 
-.active {
+.filter-element.active {
+  background-color: black;
+  color: white;
+  font-weight: bold;
 }

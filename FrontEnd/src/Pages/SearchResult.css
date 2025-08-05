@@ -1,0 +1,10 @@
+.result-container {
+  margin-inline: 1rem;
+  margin-top: 6rem;
+}
+.result-container .result-video-list {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  /* padding: 1rem; */
+}

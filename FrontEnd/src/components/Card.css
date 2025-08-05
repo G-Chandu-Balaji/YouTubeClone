@@ -107,3 +107,26 @@
 .medium .top {
   border-radius: 0.5rem;
 }
+
+.larger {
+  display: flex;
+  height: auto;
+}
+.larger .top {
+  flex: 4.5;
+}
+.larger .top img {
+  height: 100%;
+}
+.larger .bottom {
+  flex: 6;
+}
+.larger-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.larger .video-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+}

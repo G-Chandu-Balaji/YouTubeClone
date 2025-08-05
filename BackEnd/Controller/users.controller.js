@@ -62,7 +62,7 @@ export async function LoginUser(req, res) {
           expiresIn: "10d",
         });
 
-        res.json({ message: "Password matched", token });
+        res.json({ message: "Password matched", token, data });
       }
     }
   } catch (err) {

@@ -1,15 +1,17 @@
 .videoPage {
   display: flex;
-  margin-inline: 3rem;
+  /* margin-inline: 4rem; */
+  margin-left: 4rem;
+  margin-right: 2rem;
   /* gap: 1rem; */
   overflow: hidden;
   /* border: 1px solid black; */
-  margin-top: 1rem;
+  margin-top: 5rem;
 }
 .video-list {
   /* border: 1px solid black; */
 
-  padding-left: 1.5rem;
+  padding-left: 0.5rem;
   padding-right: 0.5rem;
 
   flex: 4;

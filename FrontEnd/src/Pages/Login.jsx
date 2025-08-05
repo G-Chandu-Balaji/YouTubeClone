@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess, logout } from "../utils/userSlice";
 
 function YouTubeLogin() {
+  const dispatch = useDispatch();
   const [isRegistering, setIsRegistering] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const loggedInUser = useSelector((store) => store.user.currentUser);
   const [error, setError] = useState("");
   // const [token, setToken] = useState("");
 
@@ -31,7 +34,7 @@ function YouTubeLogin() {
   }
   async function handlelogin() {
     try {
-      const data = await fetch("http://localhost:5000/api/login", {
+      const data = await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,9 +47,10 @@ function YouTubeLogin() {
       const fulldata = await data.json();
 
       console.log(fulldata);
-      localStorage.setItem("token", fulldata.token);
-      const token1 = localStorage.getItem("token");
-      console.log(token1);
+
+      if (fulldata.data) {
+        dispatch(loginSuccess(fulldata));
+      }
     } catch (err) {
       console.log("Error", err.message);
     }
@@ -97,20 +101,14 @@ function YouTubeLogin() {
     } else {
       await handlelogin();
     }
-
-    // Dummy login success
-    // setLoggedInUser({
-    //   name: isRegistering ? name : email.split("@")[0],
-    //   email,
-    // });
   }
 
   const handleLogout = () => {
+    dispatch(logout());
     setEmail("");
     setPassword("");
     setName("");
     setError("");
-    setLoggedInUser(null);
   };
 
   return (
@@ -172,10 +170,13 @@ function YouTubeLogin() {
         </form>
       ) : (
         <div className="login-home">
-          <h2>Welcome, {loggedInUser.name}</h2>
+          <h2>Welcome, {loggedInUser}</h2>
           <p>You are now signed in!</p>
-          <button onClick={handleLogout} className="form-button">
+          <button className="form-button">
             <Link to="/">Go to HOME</Link>
+          </button>
+          <button onClick={handleLogout} className="form-button">
+            <Link to="/">LogOut</Link>
           </button>
         </div>
       )}

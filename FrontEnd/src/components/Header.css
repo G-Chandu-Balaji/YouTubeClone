@@ -1,8 +1,9 @@
 .header-container {
   background-color: white;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
+  /* border-bottom: 1px solid #ddd; */
+  position: fixed;
   top: 0;
+  width: 100%;
   /* position: relative; */
   z-index: 1000;
 }

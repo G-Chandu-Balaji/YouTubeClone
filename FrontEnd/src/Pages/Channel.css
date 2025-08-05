@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-top: 4rem;
 }
 .channel-layout {
   display: flex;
@@ -20,16 +21,6 @@
   width: 80px;
 }
 
-channel-banner {
-  /* margin: 0 4rem; */
-  padding: 0.5rem;
-  /* height: 5rem; */
-  /* flex: 1; */
-  background-color: beige;
-  border: 1px solid black;
-  border-radius: 0.5rem;
-  display: block;
-}
 /* .channel-banner img {
   width: 100%;
   max-height: 300px;

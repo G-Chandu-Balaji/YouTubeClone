@@ -125,16 +125,28 @@ export async function dislikeVideo(req, res) {
   }
 }
 
-// 7. Search videos by tag
-export async function searchByTag(req, res) {
+// 7. Search videos by query
+export async function searchVideos(req, res) {
   try {
-    const { tag } = req.query;
-    if (!tag) return res.status(400).json({ error: "Tag query missing" });
+    const q = req.query.q;
+    if (!q) return res.status(400).json({ error: "Search query missing" });
 
-    const videos = await VideoModel.find({ tags: { $in: [tag] } });
+    const query = q.toLowerCase();
+
+    const videos = await VideoModel.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { tags: { $in: [query] } },
+      ],
+    })
+      .populate("channelId", "name channelImage bannerImage subscribers")
+      .populate("uploadedBy", "username");
+
     res.status(200).json(videos);
   } catch (err) {
-    res.status(500).json({ error: "Failed to search videos by tag" });
+    res
+      .status(500)
+      .json({ error: "Failed to search videos ,internal server error" });
   }
 }
 

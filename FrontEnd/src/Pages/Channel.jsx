@@ -3,6 +3,7 @@ import { Link, useOutletContext, useParams } from "react-router";
 import Sidebar from "../components/Sidebar";
 import "./Channel.css";
 import Card from "../components/Card";
+import FormatNumbers from "../utils/formatnumbers";
 
 const data = [
   {
@@ -116,7 +117,7 @@ export default function Channel() {
               <span>
                 <strong>@{channel.name}</strong>
               </span>
-              <span>{channel.subscribers} sunscribers</span>
+              <span>{FormatNumbers(channel.subscribers)} subscribers</span>
               <span>{videos.length} videos</span>
             </div>
             <div>{channel.description}</div>

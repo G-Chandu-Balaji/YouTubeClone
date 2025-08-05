@@ -6,15 +6,16 @@ import {
   getVideoById,
   insertManyVideos,
   likeVideo,
-  searchByTag,
+  searchVideos,
   updateVideo,
 } from "../Controller/video.controller.js";
 import VerifyToken from "../middleware/verify.js";
 
 export default function videoRoutes(app) {
   app.get("/api/video", getAllVideos);
-  app.get("/api/video/search", searchByTag);
+  app.get("/api/video/search", searchVideos);
   app.get("/api/video/:videoId", getVideoById);
+  // app.get("/api/videos/search", searchVideos);
 
   // Protected routes
   app.post("/api/video", addVideoByUrl);
