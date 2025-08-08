@@ -1,22 +1,95 @@
-import React from "react";
+import React, { useState } from "react";
 import "./commentItem.css";
+import { formatDistanceToNow } from "date-fns";
 
-export default function CommentItem({ data }) {
-  const isActive = false;
+export default function CommentItem({ data, videoId }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(data.text);
+  const { profileImage, username } = data.userId;
+  const [editoptions, setEditOptions] = useState(false);
+  const timeAgo = formatDistanceToNow(new Date(data.createdAt), {
+    addSuffix: true,
+  });
+
+  const token = localStorage.getItem("token"); // 🔐 Check user sign-in
+
+  function handleOptions() {
+    setEditOptions(!editoptions);
+    setIsEditing(false);
+  }
+
+  async function OnEdit(id, text) {
+    try {
+      const data = await fetch(`http://localhost:5000/api/comments/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          text: text,
+        }),
+      });
+      const fulldata = await data.json();
+      console.log("adding the comment", fulldata);
+    } catch (err) {
+      console.log("Error", err.message);
+    }
+  }
+
+  async function handleDelete(id) {
+    try {
+      const res = await fetch(`http://localhost:5000/api/comments/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const result = await res.json();
+      console.log("Deleted comment", result);
+      // TODO: Inform parent to refresh the comment list
+    } catch (err) {
+      console.error("Delete Error", err.message);
+    }
+  }
+  const handleEditSave = () => {
+    const trimmed = editText.trim();
+    if (!trimmed) return;
+    OnEdit(data._id, trimmed);
+    setIsEditing(false);
+    setEditOptions(false);
+  };
+
   return (
     <div className="commentItem-container">
       <div className="userimage-container">
-        <img
-          src="https://yt3.ggpht.com/ytc/AIdro_lEhhB_Ta9W2SpUFJa7OK4dnN9xrefvFGu_8UiFRe2xGOw=s88-c-k-c0x00ffffff-no-rj"
-          alt=""
-        />
+        <img src={profileImage} alt="" />
       </div>
       <div className="comment-right-section">
         <div className="comment-head">
-          <div className="comment-user">{data.userId}</div>
-          <span>{data.timestamp}</span>
+          <div className="comment-user">@{username}</div>
+          <span>{timeAgo}</span>
         </div>
-        <div>{data.text}</div>
+
+        {isEditing ? (
+          <div className="edit-textbox">
+            <input
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+            />
+            <button onClick={handleEditSave}>Save</button>
+            <button
+              onClick={() => {
+                setIsEditing(false), setEditOptions(false);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <div>{data.text}</div>
+        )}
 
         <div className="comment-like-container">
           <div>
@@ -30,11 +103,11 @@ export default function CommentItem({ data }) {
         </div>
       </div>
       <div className="edit-container">
-        <p>:</p>
-        {isActive ? (
+        <p onClick={handleOptions}>:</p>
+        {editoptions ? (
           <div className="edit-options ">
-            <div>edit</div>
-            <div>delete</div>
+            <div onClick={() => setIsEditing(!isEditing)}>edit</div>
+            <div onClick={() => handleDelete(data._id)}>delete</div>
           </div>
         ) : (
           ""

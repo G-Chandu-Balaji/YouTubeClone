@@ -5,75 +5,14 @@ import "./Channel.css";
 import Card from "../components/Card";
 import FormatNumbers from "../utils/formatnumbers";
 
-const data = [
-  {
-    videoId: "video01",
-    title: "Learn React in 30 Minutes",
-    thumbnailUrl:
-      "https://marketplace.canva.com/EAEqfS4X0Xw/1/0/1600w/canva-most-attractive-youtube-thumbnail-wK95f3XNRaM.jpg",
-    channelId: "channel01",
-    uploader: "user01",
-    views: 15200,
-    likes: 1023,
-    dislikes: 45,
-    uploadDate: "2024-09-20",
-    comments: [
-      {
-        commentId: "comment01",
-        userId: "user02",
-        text: "Great video! Very helpful.",
-        timestamp: "2024-09-21T08:30:00Z",
-      },
-    ],
-  },
-  {
-    videoId: "video02",
-    title: "Learn React in 30 Minutes",
-    thumbnailUrl:
-      "https://i.pinimg.com/736x/5a/2e/37/5a2e373fb15805b2869e86a7dec7a1a4.jpg",
-    description: "A quick tutorial to get started with React.",
-    channelId: "channel01",
-    uploader: "user01",
-    views: 15200,
-    likes: 1023,
-    dislikes: 45,
-    uploadDate: "2024-09-20",
-    comments: [
-      {
-        commentId: "comment01",
-        userId: "user02",
-        text: "Great video! Very helpful.",
-        timestamp: "2024-09-21T08:30:00Z",
-      },
-    ],
-  },
-  {
-    videoId: "video03",
-    title: "Learn React in 30 Minutes",
-    thumbnailUrl:
-      "https://marketplace.canva.com/EAEqfS4X0Xw/1/0/1600w/canva-most-attractive-youtube-thumbnail-wK95f3XNRaM.jpg",
-    channelId: "channel01",
-    uploader: "user01",
-    views: 15200,
-    likes: 1023,
-    dislikes: 45,
-    uploadDate: "2024-09-20",
-    comments: [
-      {
-        commentId: "comment01",
-        userId: "user02",
-        text: "Great video! Very helpful.",
-        timestamp: "2024-09-21T08:30:00Z",
-      },
-    ],
-  },
-];
-
 export default function Channel() {
   const { channelId } = useParams();
   const [channeldata, setChanneldata] = useState(null);
   const isOpen = useOutletContext();
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("Home");
+
+  // const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     async function getSideVideos() {
@@ -120,33 +59,75 @@ export default function Channel() {
               <span>{FormatNumbers(channel.subscribers)} subscribers</span>
               <span>{videos.length} videos</span>
             </div>
-            <div>{channel.description}</div>
+            <div className="channel-description">{channel.description}</div>
             <div className="channel-info-buttons">
               <button>Subscribe</button>
               <button>Join</button>
             </div>
           </div>
         </div>
+
         <div>
           <div className="channel-nav">
-            <li>home</li>
-            <li>videos</li>
-            <li>shorts</li>
-            <li>live</li>
-            <li>playlsit</li>
+            <li
+              className={activeTab === "Home" ? "active-tab" : ""}
+              onClick={() => setActiveTab("Home")}
+            >
+              Home
+            </li>
+            <li
+              className={activeTab === "videos" ? "active-tab" : ""}
+              onClick={() => setActiveTab("videos")}
+            >
+              videos
+            </li>
+            <li onClick={() => setActiveTab("shorts")}>shorts</li>
+            <li onClick={() => setActiveTab("live")}>live</li>
+            <li onClick={() => setActiveTab("playlist")}>playlist</li>
           </div>
           <hr />
         </div>
-        <div className="channel-videos">
-          {videos.map((ele) => (
-            <Link
-              to={`/watch/:${ele.videoId}`}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <Card videodata={ele} medium={true} />
-            </Link>
-          ))}
-        </div>
+
+        {(activeTab === "Home" || activeTab === "videos") && (
+          <div className="channel-videos">
+            {videos.length > 0 ? (
+              videos.map((ele) => (
+                <Link
+                  key={ele._id}
+                  to={`/watch/${ele.videoId}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Card videodata={ele} medium={true} />
+                </Link>
+              ))
+            ) : (
+              <div className="empty-tab">
+                <img src="/video.png" alt="no videos" className="empty-icon" />
+                <p>This channel has no videos yet</p>
+              </div>
+            )}
+          </div>
+        )}
+        {activeTab === "shorts" && (
+          <div className="empty-tab">
+            <img src="/shorts.png" alt="shorts" className="empty-icon" />
+            <p>No shorts available</p>
+          </div>
+        )}
+
+        {activeTab === "live" && (
+          <div className="empty-tab">
+            <img src="/stream.png" alt="live" className="empty-icon" />
+            <p>No live streams yet</p>
+          </div>
+        )}
+
+        {activeTab === "playlist" && (
+          <div className="empty-tab">
+            <img src="/subscribe.png" alt="playlist" className="empty-icon" />
+            <p>This channel hasn’t created any playlists</p>
+          </div>
+        )}
       </div>
     </div>
   );

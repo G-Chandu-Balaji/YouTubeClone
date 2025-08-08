@@ -44,3 +44,71 @@
   align-items: center;
   gap: 0.25rem;
 }
+.edit-textbox {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 8px;
+  margin-top: 5px;
+}
+.edit-textbox input {
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  /* outline: none; */
+  outline-color: #065fd4;
+  width: 100%;
+}
+.edit-textbox button {
+  width: fit-content;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+
+.edit-textbox button:first-of-type {
+  background-color: #065fd4; /* Blue Save */
+  color: white;
+}
+
+.edit-textbox button:last-of-type {
+  background-color: #eee; /* Gray Cancel */
+  color: #333;
+  margin-left: 8px;
+}
+.edit-container {
+  /* position: relative; */
+  /* margin-left: 8px; */
+  cursor: pointer;
+  user-select: none;
+  text-align: right;
+}
+
+/* Dropdown for edit/delete options */
+.edit-options {
+  /* position: absolute;
+  top: 20px;
+  right: 0; */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 4px 0;
+  z-index: 10;
+  min-width: 100px;
+}
+
+/* Each item in the dropdown */
+.edit-options div {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edit-options div:hover {
+  background-color: #f2f2f2;
+}

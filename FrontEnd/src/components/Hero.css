@@ -7,3 +7,9 @@
   margin-top: 8rem;
   /* background-color: aqua; */
 }
+.no-results {
+  text-align: center;
+  color: #555;
+  margin-top: 40px;
+  font-size: 18px;
+}

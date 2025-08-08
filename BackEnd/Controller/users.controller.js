@@ -58,7 +58,7 @@ export async function LoginUser(req, res) {
       if (!validate) {
         res.json({ message: "incorrect password" });
       } else {
-        var token = JWT.sign({ email, password }, "hello", {
+        var token = JWT.sign({ userId: data._id, email: data.email }, "hello", {
           expiresIn: "10d",
         });
 

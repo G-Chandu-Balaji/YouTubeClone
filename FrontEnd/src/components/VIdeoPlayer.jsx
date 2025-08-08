@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./VidePlayer.css";
 import CommentItem from "./commentItem";
 import { BiFullscreen } from "react-icons/bi";
@@ -6,59 +6,12 @@ import ReactPlayer from "react-player";
 import { Link } from "react-router";
 import { formatDistanceToNow } from "date-fns";
 import FormatNumbers from "../utils/formatnumbers";
-
-// import ReactPlayer from "react-player/youtube";
-const mockData = {
-  videoId: "dQw4w9WgXcQ",
-  title: "Learn React in 30 Minutes",
-  uploader: "CodeWithBalaji",
-  imageUser:
-    "https://yt3.ggpht.com/pZQ5JMD4EOI8TcNYAPTzMexe_fC0CKnb_hYlV4rPfIzmDidF239fH1XKmzkeT30XSg7fxNwc_w=s88-c-k-c0x00ffffff-no-rj",
-  views: 15200,
-  likes: 1023,
-  uploadDate: "2024-09-20",
-  description: "A quick tutorial to get started with React.",
-  comments: [
-    {
-      commentId: "c1",
-      userId: "user01",
-      text: "Great video! Very helpful.",
-      timestamp: "2024-09-21T08:30:00Z",
-    },
-    {
-      commentId: "c2",
-      userId: "user01",
-      text: "Great video! Very helpful.",
-      timestamp: "2024-09-21T08:30:00Z",
-    },
-    {
-      commentId: "c3",
-      userId: "user01",
-      text: "Great video! Very helpful.",
-      timestamp: "2024-09-21T08:30:00Z",
-    },
-    {
-      commentId: "c4",
-      userId: "user01",
-      text: "Great video! Very helpful.",
-      timestamp: "2024-09-21T08:30:00Z",
-    },
-  ],
-};
+import Comments from "./Comments";
+import AddComment from "./AddComment";
 
 export default function VIdeoPlayer({ videodata }) {
   const [expanded, setExpanded] = useState(false);
-  const [comments, setComments] = useState([]);
-  const {
-    // views,
-    // title,
-    // likes,
-    // description,
-    // comments,
-    // uploader,
-    // uploadDate,
-    // imageUser,
-  } = mockData;
+
   console.log(videodata);
   const {
     title,
@@ -76,17 +29,6 @@ export default function VIdeoPlayer({ videodata }) {
   const timeAgo = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,
   });
-
-  useEffect(() => {
-    async function getcomments() {
-      let res = await fetch(`http://localhost:5000/api/comments/${_id}`);
-      let data = await res.json();
-      console.log("comments", data.comments);
-      setComments(data.comments);
-      console.log("inside state comments", comments);
-    }
-    getcomments();
-  }, [_id]);
 
   return (
     <div className="video-section">
@@ -149,12 +91,7 @@ export default function VIdeoPlayer({ videodata }) {
       </div>
       <hr />
       <div>
-        <h3>{comments.length} Comments</h3>
-        <div>
-          {comments.map((ele) => (
-            <CommentItem data={ele} key={ele._id} />
-          ))}
-        </div>
+        <Comments _id={_id} />
       </div>
     </div>
   );

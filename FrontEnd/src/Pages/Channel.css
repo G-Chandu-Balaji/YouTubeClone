@@ -107,3 +107,39 @@
   /* display: flex;
   gap: 0.5rem; */
 }
+.channel-description {
+  line-height: 1.4;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.channel-nav li {
+  display: inline-block;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: #555;
+}
+
+.channel-nav .active-tab {
+  border-bottom: 2px solid #065fd4;
+  font-weight: bold;
+  color: #065fd4;
+}
+.empty-tab {
+  text-align: center;
+  color: #666;
+  padding: 40px 20px;
+  font-size: 16px;
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  opacity: 0.4;
+  margin-bottom: 12px;
+}

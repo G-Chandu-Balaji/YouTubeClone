@@ -1,13 +1,16 @@
 import jwt from "jsonwebtoken";
 export default async function VerifyToken(req, res, next) {
   const authHeader = req.headers.authorization;
+
   if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
+
     jwt.verify(token, "hello", function (err, data) {
       if (err) {
         res.status(404).json({ message: err.message });
       } else {
-        console.log(data);
+        console.log("decoded data", data);
+        req.user = data;
         next();
       }
     });

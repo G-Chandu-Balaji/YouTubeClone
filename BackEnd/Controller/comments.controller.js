@@ -4,11 +4,9 @@ import CommentModel from "../Model/comments.model.js";
 export async function fetchComments(req, res) {
   try {
     const { videoId } = req.params;
-    const comments = await CommentModel.find({ videoId }).populate(
-      "userId",
-      "username profileImage"
-    );
-    // .sort({ createdAt: -1 });
+    const comments = await CommentModel.find({ videoId })
+      .populate("userId", "username profileImage")
+      .sort({ createdAt: -1 });
 
     res.json({ comments });
   } catch (err) {
@@ -21,12 +19,16 @@ export async function addComment(req, res) {
   try {
     const { videoId } = req.params;
     const { text } = req.body;
-    const userId = req.user.userId;
+    const { userId } = req.user;
+    // console.log(data);
+
+    if (!text)
+      return res.status(400).json({ error: "Comment text is required" });
 
     const comment = await CommentModel.create({ videoId, userId, text });
-    res.status(201).json(comment);
+    res.status(201).json({ message: "Comment added", text });
   } catch (err) {
-    res.status(500).json({ error: "Failed to add comment" });
+    res.status(500).json({ error: "Failed to add comment", err });
   }
 }
 

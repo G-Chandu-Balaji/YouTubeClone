@@ -4,10 +4,11 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 
 export default function Header({ setIsOpen }) {
-  const username = useSelector((store) => store.user.currentUser);
+  const { currentUser, profileImage } = useSelector((store) => store.user);
+  console.log("in header ", currentUser, profileImage);
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  let isSignin = username ? true : false;
+  let isSignin = currentUser ? true : false;
 
   function handleSearch(e) {
     e.preventDefault();
@@ -62,8 +63,15 @@ export default function Header({ setIsOpen }) {
                 </Link>
               </div>
               <div className="sigin">
-                <img src="/user.png" alt="user-icon" width={30} height={30} />
-                <span>{username}</span>
+                <img
+                  src={profileImage}
+                  alt="user-icon"
+                  width={30}
+                  height={30}
+                />
+                <span>
+                  <Link to="/login">{currentUser}</Link>
+                </span>
               </div>
             </div>
           ) : (
