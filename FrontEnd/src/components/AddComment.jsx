@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddComment.css";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function AddComment({ videoId, onCommentAdded }) {
   const [text, setText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { profileImage } = useSelector((store) => store.user);
 
@@ -13,7 +16,7 @@ export default function AddComment({ videoId, onCommentAdded }) {
 
   const handleAddComment = async () => {
     if (!text.trim()) return;
-
+    setLoading(true);
     try {
       const res = await fetch(`http://localhost:5000/api/comments/${videoId}`, {
         method: "POST",
@@ -25,12 +28,24 @@ export default function AddComment({ videoId, onCommentAdded }) {
       });
 
       const data = await res.json();
+      if (!res.ok) {
+        setLoading(false);
+        toast.error(data.error || "Something went wrong");
+        return;
+      }
+      if (data.text) {
+        onCommentAdded();
+        toast.success("Comment added");
+        setText("");
+      }
       console.log("videoId", videoId);
       console.log("response of adding commment", data);
-      setText("");
-      onCommentAdded(); // 🔄 Refresh comment list
     } catch (err) {
+      toast.error("Network error. Please try again.");
+
       console.error("Error adding comment:", err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,7 +81,10 @@ export default function AddComment({ videoId, onCommentAdded }) {
         >
           <button onClick={() => setIsFocused(false)}>Cancel</button>
 
-          <button onClick={handleAddComment}>Comment</button>
+          <button onClick={handleAddComment} disabled={loading}>
+            {" "}
+            {loading ? <LoadingSpinner size={20} /> : "Comment"}
+          </button>
         </div>
       </div>
     </div>

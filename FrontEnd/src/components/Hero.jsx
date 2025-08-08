@@ -4,11 +4,13 @@ import Card from "./Card";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addVideos } from "../utils/videoSlice";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function Hero({ filtername }) {
   const dispatch = useDispatch();
   const [videos, setVideos] = useState([]);
   const [filteredVideos, setFilteredVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
   const existingVideos = useSelector((store) => store.videos.videos);
 
   useEffect(() => {
@@ -17,6 +19,7 @@ export default function Hero({ filtername }) {
         console.log("data from redux no fetchig");
         setVideos(existingVideos);
         setFilteredVideos(existingVideos);
+        setLoading(false);
         return;
       }
       try {
@@ -28,6 +31,8 @@ export default function Hero({ filtername }) {
         dispatch(addVideos(data));
       } catch (err) {
         console.log("error", err.message);
+      } finally {
+        setLoading(false);
       }
     }
     getData();
@@ -53,12 +58,22 @@ export default function Hero({ filtername }) {
   }, [filtername, videos]);
 
   return (
-    <div className="hero-container">
-      {filteredVideos.length === 0 ? (
-        <div className="no-results">No videos found</div>
+    <>
+      {loading ? (
+        <LoadingSpinner />
       ) : (
-        filteredVideos.map((ele) => <Card key={ele._id} videodata={ele} />)
+        <>
+          {filteredVideos.length === 0 ? (
+            <div className="no-results">No videos found</div>
+          ) : (
+            <div className="hero-container">
+              {filteredVideos.map((ele) => (
+                <Card key={ele._id} videodata={ele} />
+              ))}
+            </div>
+          )}
+        </>
       )}
-    </div>
+    </>
   );
 }

@@ -9,20 +9,24 @@ import Login from "./Pages/Login";
 import CreateChannel from "./Pages/CreateChannel";
 import Video from "./Pages/video";
 import SearchResult from "./Pages/SearchResult";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/watch/:id" element={<Video />} />
-        <Route path="login" element={<Login />} />
-        <Route path="/user/channel/create" element={<CreateChannel />} />
-        <Route path="channel/:channelId" element={<Channel />} />
-        <Route path="/search" element={<Home />} />
-      </Route>
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/watch/:id" element={<Video />} />
+          <Route path="login" element={<Login />} />
+          <Route path="/user/channel/create" element={<CreateChannel />} />
+          <Route path="channel/:channelId" element={<Channel />} />
+          <Route path="/search" element={<Home />} />
+        </Route>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <Toaster position="top-center" reverseOrder={false} />
+    </>
   );
 }
 

@@ -62,7 +62,7 @@ export async function deleteComment(req, res) {
       return res.status(403).json({ error: "Unauthorized" });
 
     await CommentModel.findByIdAndDelete(commentId);
-    res.json({ message: "Comment deleted" });
+    res.json({ message: "Comment deleted", comment: comment.text });
   } catch (err) {
     res.status(500).json({ error: "Failed to delete comment" });
   }

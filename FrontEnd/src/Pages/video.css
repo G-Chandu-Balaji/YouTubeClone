@@ -10,7 +10,8 @@
 }
 .video-list {
   /* border: 1px solid black; */
-
+  height: 150vh;
+  overflow-y: scroll;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 
