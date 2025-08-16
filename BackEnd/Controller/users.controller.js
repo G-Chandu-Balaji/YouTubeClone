@@ -14,11 +14,10 @@ export default async function Users(req, res) {
 
 export async function createUsers(req, res) {
   try {
-    // let { name, email, password } = req.body;
     let { username, email, password } = req.body;
 
     if (await userModel.findOne({ email })) {
-      res.json("User Email already exists");
+      res.status(409).json({ message: "User Email already exists" });
     }
     // console.log(newUserdata);
     let hashpassword = await bcrypt.hash(password, 10);
@@ -28,10 +27,13 @@ export async function createUsers(req, res) {
       password: hashpassword,
     });
     return res
-      .status(200)
+      .status(201)
       .json({ message: "user registered suceessfully", newUser });
   } catch (err) {
-    res.status(404).send(err.message);
+    res.status(500).json({
+      message: "Internal server error",
+      error: err.message,
+    });
   }
 }
 
@@ -48,25 +50,37 @@ export async function deleteUser(req, res) {
 
 export async function LoginUser(req, res) {
   try {
-    let { email, password } = req.body;
-    let data = await userModel.findOne({ email });
+    const { email, password } = req.body;
 
+    // Find user by email
+    const data = await userModel.findOne({ email });
     if (!data) {
-      res.json({ message: `user not registered, check your email` });
-    } else {
-      let validate = await bcrypt.compare(password, data.password);
-      if (!validate) {
-        res.json({ message: "incorrect password" });
-      } else {
-        var token = JWT.sign({ userId: data._id, email: data.email }, "hello", {
-          expiresIn: "10d",
-        });
-
-        res.json({ message: "Password matched", token, data });
-      }
+      return res
+        .status(404)
+        .json({ message: "User not registered, check your email" });
     }
+
+    // Validate password
+    const isValidPassword = await bcrypt.compare(password, data.password);
+    if (!isValidPassword) {
+      return res.status(401).json({ message: "Incorrect password" });
+    }
+
+    // Generate JWT
+    const token = JWT.sign({ userId: data._id, email: data.email }, "hello", {
+      expiresIn: "10d",
+    });
+
+    return res.status(200).json({
+      message: "Login successful",
+      token,
+      data,
+    });
   } catch (err) {
-    res.status(404).send(err.message);
+    console.error("Login Error:", err);
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
   }
 }
 

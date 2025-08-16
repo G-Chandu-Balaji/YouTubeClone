@@ -1,44 +1,48 @@
 .sidebar {
   position: fixed;
+  width: 220px;
 
   top: 60px;
   left: 0;
   height: 100vh;
-  width: 220px;
   background: #fff;
   border-right: 1px solid #ddd;
   padding: 10px 0;
   /* transition: all 0.3s ease; */
-}
-.scroll-bar {
   overflow-y: scroll;
+  z-index: 2000;
 }
 
-.scroll-bar li span {
-  font-size: 14px;
-  white-space: nowrap;
-}
 .mini-sidebar {
   width: 80px;
+  overflow: hidden;
+  position: fixed;
 
-  /* height: 20vh; */
-}
-.mini-sidebar .explore,
-.mini-sidebar .you-section {
-  display: none;
+  top: 60px;
+  left: 0;
+  height: 100vh;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 10px 0;
+  z-index: 2000;
 }
 
 .mini-sidebar li {
   display: flex;
   flex-direction: column;
+  align-items: center;
+
   gap: 10px;
+  padding: 12px 20px;
+  gap: 16px;
+  cursor: pointer;
+}
+.mini-sidebar li:hover {
+  background-color: #f1f1f1;
+  border-radius: 0.75rem;
 }
 .mini-sidebar li span {
   font-size: 0.75rem;
-}
-
-.sidebar.collapsed {
-  width: 70px;
 }
 
 .sidebar ul {
@@ -61,51 +65,6 @@
   border-radius: 0.75rem;
 }
 
-/* .sidebar li span {
-  font-size: 14px;
-  white-space: nowrap;
-} */
-
-/* hide span when collapsed */
-.sidebar.collapsed li span {
-  display: none;
-}
-
-/* toggle button */
-.toggle-btn {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 200;
-  background: white;
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    width: 220px;
-  }
-
-  .sidebar.mobile-open {
-    transform: translateX(0%);
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  }
-
-  .sidebar.collapsed {
-    width: 220px;
-  }
-
-  .toggle-btn {
-    top: 10px;
-    left: 10px;
-  }
-}
-
 .category-heading {
   margin-top: 0.5rem;
   padding: 12px 20px;
@@ -114,4 +73,31 @@
 .category-heading:hover {
   background-color: #f1f1f1;
   border-radius: 0.75rem;
+}
+
+.active-link li {
+  background-color: #f1f1f1;
+  border-radius: 0.75rem; /* optional */
+}
+
+@media (max-width: 978px) {
+  .sidebar {
+    background: rgba(29, 25, 25, 0.866);
+    width: 100%;
+    padding: 5px, 0;
+  }
+  .category-heading,
+  .sidebar ul {
+    background-color: white;
+    width: 220px;
+  }
+  .category-heading {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 570px) {
+  .mini-sidebar {
+    display: none;
+  }
 }

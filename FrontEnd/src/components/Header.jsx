@@ -51,18 +51,18 @@ export default function Header({ setIsOpen }) {
         <div className="right-icons">
           {isSignin ? (
             <div className="after-sigin">
-              <div className="sigin">
+              <div className="sigin create">
                 <img
                   src="/pluslogo.png"
                   alt="user-icon"
                   width={25}
                   height={25}
                 />
-                <Link to="/">
+                <Link to="/user/channel/create">
                   <span>Create</span>
                 </Link>
               </div>
-              <div className="sigin">
+              <div className="sigin profile-image">
                 <img
                   src={profileImage}
                   alt="user-icon"

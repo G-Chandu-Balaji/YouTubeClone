@@ -7,6 +7,14 @@ function SearchResult() {
   const [resultVideos, setResultVideos] = useState([]);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q");
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     async function FetchResult() {
       try {
@@ -26,7 +34,7 @@ function SearchResult() {
     <div className="result-container">
       <div className="result-video-list">
         {resultVideos.map((ele) => (
-          <Card videodata={ele} larger={true} />
+          <Card videodata={ele} larger={width > 460} />
         ))}
       </div>
     </div>

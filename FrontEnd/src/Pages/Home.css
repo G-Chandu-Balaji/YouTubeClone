@@ -8,7 +8,11 @@
 .left-section {
   width: 220px;
 }
-
 .mini-leftsection {
   width: 80px;
+}
+@media (max-width: 570px) {
+  .mini-leftsection {
+    width: 0;
+  }
 }

@@ -7,6 +7,11 @@
   margin-top: 8rem;
   /* background-color: aqua; */
 }
+@media (max-width: 568px) {
+  .hero-container {
+    margin-top: 8.75rem;
+  }
+}
 .no-results {
   text-align: center;
   color: #555;

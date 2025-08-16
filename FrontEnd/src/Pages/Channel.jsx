@@ -8,9 +8,10 @@ import FormatNumbers from "../utils/formatnumbers";
 export default function Channel() {
   const { channelId } = useParams();
   const [channeldata, setChanneldata] = useState(null);
-  const isOpen = useOutletContext();
+  const { isOpen } = useOutletContext();
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("Home");
+  const [error, setError] = useState(null);
 
   // const [expanded, setExpanded] = useState(false);
 
@@ -21,9 +22,16 @@ export default function Channel() {
           `http://localhost:5000/api/channel/${channelId}`
         );
         const data = await res.json();
+        // if (!res.ok) {
+        //   throw new Error(`Server error: ${res.status} ${data}`);
+        // }
+        if (!data || !data.channel) {
+          setError("Channel not found or no data available.");
+          return;
+        }
         setChanneldata(data);
       } catch (err) {
-        console.log("Error fetching side videos:", err.message);
+        setError(err.message || "Error fetching channel data");
       } finally {
         setLoading(false);
       }
@@ -33,14 +41,23 @@ export default function Channel() {
   }, [channelId]);
 
   if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error-message">{error}</div>;
   console.log("channeldata", channeldata);
   const { channel, videos } = channeldata;
   console.log(channel);
+  let leftsection = isOpen ? "mini-leftsection" : "left-section";
 
   return (
     <div className="channel-layout">
-      <div className={`left-section ${isOpen ? "mini-leftsection" : ""}`}>
+      {/* <div className={`left-section ${isOpen ? "mini-leftsection" : ""}`}>
         <Sidebar isOpen={isOpen} />
+      </div> */}
+      <div
+        className={` ${
+          window.innerWidth > 978 ? leftsection : "mini-leftsection"
+        }`}
+      >
+        <Sidebar isOpen={isOpen} closeSidebar={() => setIsOpen(false)} />
       </div>
       <div className="channel-section">
         <div className="channel-banner">

@@ -1,6 +1,9 @@
 .video-section {
   /* flex: 6; */
 }
+.video-section > *:not(:first-child) {
+  margin-inline: 1rem;
+}
 
 .video-container {
   /* padding-top: 1rem; */
@@ -8,10 +11,12 @@
   /* width: 800px; */
   /* height: 400px; */
   /* width: 870px; */
-  height: 480px; /* or any height you need */
+  height: 35vw;
+  min-height: 35rem; /* or any height you need */
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
+  /* min-width: 55rem; */
 }
 
 .video-container iframe {
@@ -64,11 +69,23 @@
   margin-bottom: 1rem; */
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
+  background-color: #010000db;
+  color: white;
 }
 .middle-right-section {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+@media (max-width: 750px) {
+  .middle-right-section {
+    gap: 0.5rem;
+  }
+  .middle-right-section .download p,
+  .middle-right-section .share p {
+    display: none;
+  }
 }
 .option-container {
   display: flex;
@@ -78,6 +95,7 @@
   background-color: #e5e5e5;
   gap: 0.25rem;
 }
+
 .like-container {
   display: flex;
   align-items: center;
@@ -106,7 +124,7 @@
   margin-top: 0.25rem;
   white-space: pre-line; /* preserves line breaks in the description */
   color: #0f0f0f;
-  font-size: 14px;
+  font-size: 0.8rem;
 }
 .video-description {
   overflow: hidden;
@@ -134,4 +152,73 @@
 
 .text-button:hover {
   text-decoration: underline;
+}
+@media (max-width: 1320px) {
+  .video-container {
+    width: 100%;
+    margin: auto;
+    min-width: none;
+    min-height: 28rem;
+    height: 10vw;
+  }
+  .video-section-video-title {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 606px) {
+  .video-section {
+    margin-top: 0.5rem;
+  }
+  .video-container {
+    min-height: 20rem;
+  }
+}
+@media (max-width: 565px) {
+  .middle-section {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .middle-right-section {
+    padding-left: 0.5rem;
+    gap: 1.5rem;
+  }
+  .middle-right-section .download p,
+  .middle-right-section .share p {
+    display: block;
+  }
+}
+@media (max-width: 400px) {
+  .video-section {
+    font-size: 0.75rem;
+  }
+  .middle-right-section {
+    padding-left: 0;
+    gap: 0.5rem;
+  }
+  .middle-left-section .uploader-image-container {
+    height: 30px;
+    width: 30px;
+  }
+  .middle-left-section {
+    font-size: 0.75rem;
+    height: 3rem;
+  }
+  .middle-left-section button {
+    padding: 0.35rem 0.5rem;
+  }
+  .video-section-video-title {
+    font-size: 0.9rem;
+    padding-bottom: 0;
+  }
+}
+@media (max-width: 450px) {
+  .video-container {
+    min-height: 16rem;
+  }
+}
+@media (max-width: 380px) {
+  .video-container {
+    min-height: 13rem;
+    /* width: 100vw; */
+  }
 }

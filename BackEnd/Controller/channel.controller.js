@@ -5,20 +5,40 @@ import VideoModel from "../Model/video.model.js";
 // Create Channel
 export async function createChannel(req, res) {
   try {
-    const { name, description, bannerImage } = req.body;
+    const { name, description, bannerImage, channelImage } = req.body;
     const ownerId = req.user.userId;
+
+    // Validation
+    if (!name || !description) {
+      return res
+        .status(400)
+        .json({ error: "Name and description are required" });
+    }
+    if (!bannerImage || !channelImage) {
+      return res
+        .status(400)
+        .json({ error: "banner Image and channel Image are required" });
+    }
+    // Optional: Ensure user doesn’t already have a channel
+    const existing = await channelModel.findOne({ name });
+    if (existing) {
+      return res.status(400).json({ error: "channel name already exists" });
+    }
 
     const newChannel = await channelModel.create({
       name,
       description,
       bannerImage,
       ownerId,
-      subscribers: [],
+      channelImage,
+      subscribers: 0,
     });
 
     res.status(201).json(newChannel);
   } catch (err) {
-    res.status(500).json({ error: "Failed to create channel" });
+    console.error("Error creating channel:", err);
+
+    res.status(500).json({ error: "Server error while creating channel" });
   }
 }
 
@@ -34,7 +54,7 @@ export async function getChannelById(req, res) {
     });
 
     if (!channel) return res.status(404).json({ error: "Channel not found" });
-    if (!videos) return res.status(404).json({ error: "videos not found" });
+    // if (!videos) return res.status(404).json({ error: "videos not found" });
 
     res.json({ channel, videos });
   } catch (err) {

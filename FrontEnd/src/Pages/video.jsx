@@ -1,10 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import VideoPlayer from "../components/VIdeoPlayer";
 import "./video.css";
 import Card from "../components/Card";
 import { Link, useParams } from "react-router";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useSelector } from "react-redux";
+import { WiSnow } from "react-icons/wi";
 
 export default function Video() {
   const { id } = useParams();
@@ -13,6 +14,35 @@ export default function Video() {
   const reduxSidevideo = useSelector((store) => store.videos.videos);
   const [loadingVideo, setLoadingVideo] = useState(true);
   const [loadingSide, setLoadingSide] = useState(true);
+
+  // refs for height syncing
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    // Function to set height from left section
+    function matchHeight() {
+      if (leftRef.current && rightRef.current) {
+        rightRef.current.style.height = leftRef.current.offsetHeight + "px";
+      }
+    }
+
+    // Use ResizeObserver to track height changes in first child
+    const observer = new ResizeObserver(matchHeight);
+    if (leftRef.current) {
+      observer.observe(leftRef.current);
+    }
+
+    // Cleanup
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -73,7 +103,7 @@ export default function Video() {
 
   return (
     <div className="videoPage">
-      <div className="videoPage-left-section">
+      <div className="videoPage-left-section" ref={leftRef}>
         {loadingVideo ? (
           <LoadingSpinner />
         ) : (
@@ -81,7 +111,7 @@ export default function Video() {
         )}
       </div>
 
-      <div className="video-list">
+      <div className="video-list" ref={rightRef}>
         {loadingSide ? (
           <LoadingSpinner />
         ) : (
@@ -89,7 +119,8 @@ export default function Video() {
             .filter((ele) => ele._id != id)
             .map((ele) => (
               <Fragment key={ele._id}>
-                <Card videodata={ele} smaller={true} />
+                {width > 1010 && <Card videodata={ele} smaller={true} />}
+                {width <= 1010 && <Card videodata={ele} />}
               </Fragment>
             ))
         )}

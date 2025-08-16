@@ -66,11 +66,11 @@ export default function VIdeoPlayer({ videodata }) {
               <p>{dislikes}</p>
             </div>
           </div>
-          <div className="option-container">
+          <div className="option-container share">
             <img src="/share.png" alt="like" height={20} width={20} />
             <p>share</p>
           </div>
-          <div className="option-container">
+          <div className="option-container download">
             <img src="/download.png" alt="like" height={20} width={20} />
             <p>Download</p>
           </div>

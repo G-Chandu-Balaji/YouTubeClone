@@ -3,6 +3,7 @@ import "./Login.css";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, logout } from "../utils/userSlice";
+import toast from "react-hot-toast";
 
 function YouTubeLogin() {
   const dispatch = useDispatch();
@@ -12,29 +13,10 @@ function YouTubeLogin() {
   const [password, setPassword] = useState("");
   const loggedInUser = useSelector((store) => store.user.currentUser);
   const [error, setError] = useState("");
-  // const [token, setToken] = useState("");
 
-  async function getusers() {
-    const token = localStorage.getItem("token");
-    try {
-      const data = await fetch("http://localhost:5000/api/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const fulldata = await data.json();
-
-      console.log(fulldata);
-      localStorage.setItem("token", fulldata.token);
-    } catch (err) {
-      console.log("Error", err.message);
-    }
-  }
   async function handlelogin() {
     try {
-      const data = await fetch("http://localhost:5000/api/user/login", {
+      const res = await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,12 +26,15 @@ function YouTubeLogin() {
           password,
         }),
       });
-      const fulldata = await data.json();
-
+      const fulldata = await res.json();
+      if (!res.ok) {
+        toast.error(fulldata.message || "Something went wrong");
+      }
       console.log(fulldata);
 
       if (fulldata.data) {
         dispatch(loginSuccess(fulldata));
+        toast.success("LoggedIn successfully");
       }
     } catch (err) {
       console.log("Error", err.message);
@@ -73,29 +58,40 @@ function YouTubeLogin() {
     if (!emailRegex.test(email)) {
       return setError("Please enter a valid email address.");
     }
-
-    // if (!isStrongPassword(password)) {
-    //   return setError(
-    //     "Password must be at least 8 characters, include a number and a special character."
-    //   );
-    // }
+    if (isRegistering) {
+      if (!isStrongPassword(password)) {
+        return setError(
+          "Password must be at least 8 characters, include a number and a special character."
+        );
+      }
+    }
 
     if (isRegistering) {
       try {
-        const data = await fetch("http://localhost:5000/api/users", {
+        const res = await fetch("http://localhost:5000/api/user/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name,
+            username: name,
             email,
             password,
           }),
         });
-        const fulldata = await data.json();
+        const fulldata = await res.json();
+        if (!res.ok) {
+          toast.error(fulldata.message || "something went wrong");
+          return;
+        }
         console.log(fulldata);
+        toast.success(fulldata.message);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setIsRegistering(false);
       } catch (err) {
+        toast.error(err.message);
         console.log("Error", err.message);
       }
     } else {
@@ -105,6 +101,7 @@ function YouTubeLogin() {
 
   const handleLogout = () => {
     dispatch(logout());
+    toast.success("Logout successfully");
     setEmail("");
     setPassword("");
     setName("");
@@ -176,11 +173,10 @@ function YouTubeLogin() {
             <Link to="/">Go to HOME</Link>
           </button>
           <button onClick={handleLogout} className="form-button">
-            <Link to="/">LogOut</Link>
+            <Link to="/login">LogOut</Link>
           </button>
         </div>
       )}
-      <button onClick={getusers}>fetch users</button>
     </div>
   );
 }

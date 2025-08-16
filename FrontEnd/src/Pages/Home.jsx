@@ -9,12 +9,17 @@ import SearchResult from "./SearchResult";
 
 export default function Home() {
   const [filtername, SetFiltername] = useState("All");
-  const isOpen = useOutletContext();
+  const { isOpen, setIsOpen } = useOutletContext();
   const location = useLocation();
+  let leftsection = isOpen ? "mini-leftsection" : "left-section";
   return (
     <div className="home-layout">
-      <div className={`left-section ${isOpen ? "mini-leftsection" : ""}`}>
-        <Sidebar isOpen={isOpen} />
+      <div
+        className={` ${
+          window.innerWidth > 978 ? leftsection : "mini-leftsection"
+        }`}
+      >
+        <Sidebar isOpen={isOpen} closeSidebar={() => setIsOpen(false)} />
       </div>
       <div className="right-section">
         {location.pathname != "/search" && (

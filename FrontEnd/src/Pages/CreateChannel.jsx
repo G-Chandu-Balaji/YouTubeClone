@@ -41,6 +41,8 @@
 import React, { useState } from "react";
 import "./CreateChannel.css";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router";
 
 export default function CreateChannel() {
   const [formData, setFormData] = useState({
@@ -49,6 +51,8 @@ export default function CreateChannel() {
     channelImage: "",
     bannerImage: "",
   });
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,9 +60,10 @@ export default function CreateChannel() {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/channels", {
+      const res = await fetch("http://localhost:5000/api/channel/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,9 +73,20 @@ export default function CreateChannel() {
       });
 
       const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "something went wrong");
+        return;
+      }
+      if (data.name) {
+        toast.success(`${data.name} Channel Created`);
+        navigate(`/channel/${data._id}`);
+      }
       console.log("Channel Created:", data);
     } catch (err) {
-      console.error("Error creating channel:", err.message);
+      toast.error("Network error. Please try again.");
+      console.log("Error", err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -139,7 +155,9 @@ export default function CreateChannel() {
       </div>
 
       <div className="create-bottom-section">
-        <button>Cancel</button>
+        <button>
+          <Link to="/">Cancel</Link>
+        </button>
         <button onClick={handleSubmit}>Create Channel</button>
       </div>
     </div>
