@@ -17,8 +17,8 @@ const videoSchema = new Schema(
       required: true,
     },
     views: { type: Number, default: 0 },
-    likes: { type: Number },
-    dislikes: { type: Number },
+    likes: { type: Number, default: 0 },
+    dislikes: { type: Number, default: 0 },
     tags: [String],
   },
   { timestamps: true }

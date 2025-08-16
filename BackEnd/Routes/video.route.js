@@ -1,3 +1,4 @@
+// import { verify } from "jsonwebtoken";
 import {
   addVideoByUrl,
   deleteVideo,
@@ -18,7 +19,7 @@ export default function videoRoutes(app) {
   // app.get("/api/videos/search", searchVideos);
 
   // Protected routes
-  app.post("/api/video", addVideoByUrl);
+  app.post("/api/video", VerifyToken, addVideoByUrl);
   app.post("/api/video/dummy", insertManyVideos);
 
   app.put("/api/video/:videoId", VerifyToken, updateVideo);

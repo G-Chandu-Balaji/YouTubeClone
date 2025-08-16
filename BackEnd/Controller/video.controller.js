@@ -36,19 +36,19 @@ export async function getVideoById(req, res) {
 // 3. Update video (only by uploader)
 export async function updateVideo(req, res) {
   try {
-    const video = await VideoModel.findById(req.params.videoId);
+    const { videoId } = req.params;
+    const { userId } = req.user;
+    const video = await VideoModel.findById(videoId);
     if (!video) return res.status(404).json({ error: "Video not found" });
 
-    if (video.uploadedBy.toString() !== req.user.userId)
+    if (video.uploadedBy.toString() !== userId)
       return res
         .status(403)
         .json({ error: "Unauthorized to update this video" });
 
-    const updated = await VideoModel.findByIdAndUpdate(
-      req.params.videoId,
-      req.body,
-      { new: true }
-    );
+    const updated = await VideoModel.findByIdAndUpdate(videoId, req.body, {
+      new: true,
+    });
     res.status(200).json(updated);
   } catch (err) {
     res.status(500).json({ error: "Failed to update video" });
@@ -58,18 +58,22 @@ export async function updateVideo(req, res) {
 // 4. Delete video (only by uploader)
 export async function deleteVideo(req, res) {
   try {
-    const video = await VideoModel.findById(req.params.videoId);
+    const { videoId } = req.params;
+    const { userId } = req.user;
+    const video = await VideoModel.findById(videoId);
     if (!video) return res.status(404).json({ error: "Video not found" });
 
-    if (video.uploadedBy.toString() !== req.user.userId)
+    if (video.uploadedBy.toString() !== userId)
       return res
         .status(403)
         .json({ error: "Unauthorized to delete this video" });
 
-    await VideoModel.findByIdAndDelete(req.params.videoId);
+    await VideoModel.findByIdAndDelete(videoId);
     res.status(200).json({ message: "Video deleted successfully" });
   } catch (err) {
-    res.status(500).json({ error: "Failed to delete video" });
+    res
+      .status(500)
+      .json({ error: "Failed to delete video", message: err.message });
   }
 }
 
@@ -154,8 +158,12 @@ export const addVideoByUrl = async (req, res) => {
   try {
     const { title, description, videoUrl, thumbnailUrl, tags, channelId } =
       req.body;
-
-    if (!title || !videoUrl || !thumbnailUrl || !channelId) {
+    console.log("tags", tags);
+    const { userId } = req.user;
+    if (!userId) {
+      return res.status(401).json("User must be signed in");
+    }
+    if (!title || !videoUrl || !thumbnailUrl || !channelId || !description) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -164,9 +172,10 @@ export const addVideoByUrl = async (req, res) => {
       description,
       videoUrl,
       thumbnailUrl,
-      tags: tags?.split(",").map((tag) => tag.trim()),
+      tags,
+
       channelId,
-      uploadedBy: req.user._id,
+      uploadedBy: userId,
     });
 
     return res.status(201).json({ message: "Video added successfully", video });

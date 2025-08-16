@@ -98,7 +98,7 @@ export default function CreateChannel() {
         <div className="upload-image-seciton">
           <div className="upload-image-container">
             <img
-              src={formData.channelImage || "/user.png"}
+              src={formData.channelImage || "/user2.png"}
               alt="channel"
               className="channel-img-preview"
             />

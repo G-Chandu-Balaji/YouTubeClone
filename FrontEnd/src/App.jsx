@@ -10,6 +10,7 @@ import CreateChannel from "./Pages/CreateChannel";
 import Video from "./Pages/video";
 import SearchResult from "./Pages/SearchResult";
 import { Toaster } from "react-hot-toast";
+import AddVideoPage from "./Pages/Addvideo";
 
 function App() {
   return (
@@ -20,6 +21,14 @@ function App() {
           <Route path="/watch/:id" element={<Video />} />
           <Route path="login" element={<Login />} />
           <Route path="/user/channel/create" element={<CreateChannel />} />
+          <Route
+            path="/user/channel/:channelId/addvideos"
+            element={<AddVideoPage />}
+          />
+          <Route
+            path="/user/channel/:channelId/editvideo/:id"
+            element={<AddVideoPage isediting={true} />}
+          />
           <Route path="channel/:channelId" element={<Channel />} />
           <Route path="/search" element={<Home />} />
         </Route>
